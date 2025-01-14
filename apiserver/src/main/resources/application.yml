@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3307/apidb
+    username: apidbuser
+    password: apidbuser
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties.hibernate.format_sql: true
+    show-sql: true
+
+logging:
+  level:
+    sql: trace
