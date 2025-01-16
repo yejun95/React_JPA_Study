@@ -9,6 +9,12 @@ public interface TodoService {
 
     TodoDTO get(Long tno);
 
+    Long register(TodoDTO dto);
+
+    void modify(TodoDTO dto);
+
+    void remove(Long tno);
+
     default TodoDTO entityTodoDTO(Todo todo){
 
         return TodoDTO.builder()
@@ -20,7 +26,7 @@ public interface TodoService {
                         .build();
     }
 
-    default Todo dto(TodoDTO todoDTO){
+    default Todo dtoToEntity(TodoDTO todoDTO){
 
         return Todo.builder()
                 .tno(todoDTO.getTno())
