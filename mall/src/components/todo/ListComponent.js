@@ -17,14 +17,14 @@ const initState = {
 }
 
 function ListComponent(props) {
-    const {page, size, moveToList} = useCustomMove()
+    const {page, size, refresh, moveToList} = useCustomMove()
     const [serverData, setServerData] = useState(initState);
 
     useEffect(() => {
         getList({page, size}).then(data => {
             setServerData(data)
         })
-    }, [page, size]);
+    }, [page, size, refresh]);
 
     return (
         <div className={'border-2 border-blue-100 mt-10 mr-2 ml-2'}>

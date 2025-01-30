@@ -1,4 +1,5 @@
 import {createSearchParams, useNavigate, useSearchParams} from "react-router-dom";
+import {useState} from "react";
 
 const getNum = (param, defaultValue) => {
 
@@ -11,7 +12,7 @@ const getNum = (param, defaultValue) => {
 const useCustomMove = () => {
 
     const navigate = useNavigate();
-
+    const [refresh, setRefresh] = useState(false);
     const [queryParams] = useSearchParams();
 
     const page = getNum(queryParams.get('page'), 1);
@@ -33,6 +34,9 @@ const useCustomMove = () => {
         } else {
             queryStr = queryDefault;
         }
+
+        {/* 동일 페이지를 클릭 했을 때, 값이 refresh 되기 위하여 ListComponent쪽 useEffect에 상태 변화를 줌 */}
+        setRefresh(!refresh);
         navigate({pathname: '../list', search: queryStr})
     }
 
@@ -43,7 +47,7 @@ const useCustomMove = () => {
         })
     })
 
-    return {moveToList, moveToModify, page, size}
+    return {moveToList, moveToModify, page, size, refresh}
 }
 
 export default useCustomMove;
