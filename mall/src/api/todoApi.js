@@ -13,7 +13,7 @@ export const getList = async (pageParam) => {
     const {page, size} = pageParam;
 
     const res = await axios.get(`${prefix}/list`, { params: {page, size}});
-    // const res = await axios.get(`${prefix}/list`, { params: {...pageParam}});
+    // const res = await axios.get(`${prefix}/list`, { params: {...pageParam}}); 스프레드연산자로 가능
 
     return res.data;
 }
