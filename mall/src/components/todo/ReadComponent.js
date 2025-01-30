@@ -40,7 +40,7 @@ function ReadComponent({tno}) {
 
                 <button type='button'
                         className={'rounded p-4 m-2 text-xml w-32 text-white bg-blue-500'}
-                        onClick={() => moveToList(queryParam)}
+                        onClick={() => moveToList()}
                 >
                     List
                 </button>
