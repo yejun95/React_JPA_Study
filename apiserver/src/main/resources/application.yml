@@ -4,13 +4,22 @@ spring:
     url: jdbc:mariadb://localhost:3307/apidb
     username: apidbuser
     password: apidbuser
-
   jpa:
     hibernate:
       ddl-auto: update
     properties.hibernate.format_sql: true
     show-sql: true
+  servlet:
+    multipart:
+      max-request-size: 30MB
+      max-file-size: 5MB
 
 logging:
   level:
     sql: info
+
+# 파일 업로드 경로 생성
+org:
+  zerock:
+    upload:
+      path: upload
