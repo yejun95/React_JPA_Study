@@ -96,4 +96,25 @@ public class CustomFileUtil {
         return ResponseEntity.ok().headers(headers).body(resource);
     }
 
+    // 파일 삭제
+    public void deleteFiles(List<String> fileNames) {
+        if (fileNames == null || fileNames.isEmpty()) {return; }
+
+        fileNames.forEach(fileName -> {
+
+            // 썸네일이 있으면 삭제
+            String thumbnameFileName = "s_" + fileName;
+
+            Path thumbnailPath = Paths.get(uploadPath, thumbnameFileName);
+            Path filePath = Paths.get(uploadPath, fileName);
+
+            // 외부 리소스 작업이기 때문에 checked Exception 발생
+            try {
+                Files.deleteIfExists(thumbnailPath);
+                Files.deleteIfExists(filePath);
+            } catch (IOException e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        });
+    }
 }
