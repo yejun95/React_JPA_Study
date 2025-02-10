@@ -66,4 +66,17 @@ public class ProductRepositoryTests {
         Long pno = 1L;
         productRepository.updateToDelete(true, 1L);
     }
+
+    // update
+    @Test
+    public void testUpdate() {
+        Product product = productRepository.selectOne(1L).get();
+        product.changePrice(3000);
+        product.clearList();
+        product.addImageString(UUID.randomUUID() + "_" + "PIMAGE1.jpg");
+        product.addImageString(UUID.randomUUID() + "_" + "PIMAGE2.jpg");
+        product.addImageString(UUID.randomUUID() + "_" + "PIMAGE3.jpg");
+
+        productRepository.save(product);
+    }
 }
