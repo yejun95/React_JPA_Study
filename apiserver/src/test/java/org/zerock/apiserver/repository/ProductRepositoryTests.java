@@ -4,6 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 import org.zerock.apiserver.domain.Product;
 
@@ -54,5 +55,15 @@ public class ProductRepositoryTests {
 
         log.info(product);
         log.info(product.getImageList());
+    }
+
+    // @Modifying and delete test
+    @Commit
+    @Transactional
+    @Test
+    public void testDelete() {
+
+        Long pno = 1L;
+        productRepository.updateToDelete(true, 1L);
     }
 }

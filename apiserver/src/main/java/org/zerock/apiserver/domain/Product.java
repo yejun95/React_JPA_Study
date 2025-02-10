@@ -40,6 +40,10 @@ public class Product {
         this.pname = name;
     }
 
+    public void changeDel(boolean delFlag) {
+        this.delFlag = delFlag;
+    }
+
     // 상품 이미지가 상품에 알아서 딸려가도록 함
     public void addImage(ProductImage image) {
         image.setOrd(imageList.size());
