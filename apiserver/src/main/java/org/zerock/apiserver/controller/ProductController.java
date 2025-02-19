@@ -69,4 +69,10 @@ public class ProductController {
 
         return Map.of("result", pno);
     }
+
+    // 상품 조회
+    @GetMapping("/{pno}")
+    public ProductDTO read(@PathVariable("pno") Long pno) {
+        return productService.get(pno);
+    }
 }

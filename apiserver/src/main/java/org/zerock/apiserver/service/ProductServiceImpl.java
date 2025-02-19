@@ -15,6 +15,7 @@ import org.zerock.apiserver.dto.ProductDTO;
 import org.zerock.apiserver.repository.ProductRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -97,5 +98,39 @@ public class ProductServiceImpl implements ProductService {
         Long pno = productRepository.save(product).getPno();
 
         return pno;
+    }
+
+    // 상품 조회
+    @Override
+    public ProductDTO get(Long pno) {
+        Optional<Product> result = productRepository.findById(pno);
+
+        Product product = result.orElseThrow();
+
+        return entityToDto(product);
+    }
+
+    private ProductDTO entityToDto(Product product) {
+
+        ProductDTO productDTO = ProductDTO.builder()
+                .pno(product.getPno())
+                .pname(product.getPname())
+                .pdesc(product.getPdesc())
+                .price(product.getPrice())
+                .delFlag(product.isDelFlag())
+                .build();
+
+        List<ProductImage> imageList = product.getImageList();
+
+        if (imageList == null || imageList.size() == 0) {
+            return productDTO;
+        }
+
+        List<String> fileNameList = imageList.stream().map(productImage ->
+                productImage.getFileName()).toList();
+
+        productDTO.setUploadedFileNames(fileNameList);
+
+        return productDTO;
     }
 }
