@@ -14,7 +14,6 @@ import org.zerock.apiserver.dto.PageResponseDTO;
 import org.zerock.apiserver.dto.ProductDTO;
 import org.zerock.apiserver.repository.ProductRepository;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -51,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
 
 
             String imageStr = productImage.getFileName();
-            productDTO.setUploadedFileNames(List.of(imageStr));
+            productDTO.setUploadFileNames(List.of(imageStr));
 
             return productDTO;
         }).collect(Collectors.toList());
@@ -74,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
                 .price(productDTO.getPrice())
                 .build();
 
-        List<String> uploadFileNames = productDTO.getUploadedFileNames();
+        List<String> uploadFileNames = productDTO.getUploadFileNames();
 
         if (uploadFileNames == null || uploadFileNames.size() == 0) {
             return product;
@@ -125,7 +124,7 @@ public class ProductServiceImpl implements ProductService {
         product.changeDel(productDTO.isDelFlag());
 
         //이미지 처리
-        List<String> uploadFileNames = productDTO.getUploadedFileNames();
+        List<String> uploadFileNames = productDTO.getUploadFileNames();
 
         product.clearList();
 
@@ -158,7 +157,7 @@ public class ProductServiceImpl implements ProductService {
         List<String> fileNameList = imageList.stream().map(productImage ->
                 productImage.getFileName()).toList();
 
-        productDTO.setUploadedFileNames(fileNameList);
+        productDTO.setUploadFileNames(fileNameList);
 
         return productDTO;
     }

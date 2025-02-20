@@ -6,7 +6,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.zerock.apiserver.domain.Product;
 import org.zerock.apiserver.dto.PageRequestDTO;
 import org.zerock.apiserver.dto.PageResponseDTO;
 import org.zerock.apiserver.dto.ProductDTO;
@@ -15,6 +14,7 @@ import org.zerock.apiserver.util.CustomFileUtil;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Log4j2
 @RestController
@@ -33,7 +33,7 @@ public class ProductController {
 //
 //        List<MultipartFile> files = productDTO.getFiles();
 //        List<String> uploadedFileNames = fileUtil.saveFiles(files);
-//        productDTO.setUploadedFileNames(uploadedFileNames);
+//        productDTO.setUploadFileNames(uploadedFileNames);
 //
 //        log.info("uploadedFileNames" + uploadedFileNames);
 //
@@ -61,7 +61,7 @@ public class ProductController {
 
         List<String> uploadFileNames = fileUtil.saveFiles(files);
 
-        productDTO.setUploadedFileNames(uploadFileNames);
+        productDTO.setUploadFileNames(uploadFileNames);
 
         log.info(uploadFileNames);
 
@@ -85,8 +85,26 @@ public class ProductController {
         ProductDTO oldProductDTO = productService.get(pno);
 
         //파일 업로드
-        List<MultipartFile> files = productDTO.getFiles();
+        List<MultipartFile> files = productDTO.getFiles(); //새로운 파일
         List<String> currentUploadFileNames = fileUtil.saveFiles(files);
 
+        //keep files
+        List<String> uploadedFileNames = productDTO.getUploadFileNames(); //유지되고 있는 파일
+
+        //새로 업로드된 파일이 있다면
+        if (currentUploadFileNames != null && !currentUploadFileNames.isEmpty()) {
+            uploadedFileNames.addAll(currentUploadFileNames);
+        }
+
+        productService.modify(productDTO);
+
+        //지워져야 하는 파일
+        List<String> oldFilesNames = oldProductDTO.getUploadFileNames();
+        if (oldFilesNames != null && !oldFilesNames.isEmpty()) {
+            List<String> removeFiles = oldFilesNames.stream().filter(fileName -> !uploadedFileNames.contains(fileName)).collect(Collectors.toList());
+            fileUtil.deleteFiles(removeFiles);
+        }//end if
+
+        return Map.of("RESULT", "SUCCESS");
     }
 }

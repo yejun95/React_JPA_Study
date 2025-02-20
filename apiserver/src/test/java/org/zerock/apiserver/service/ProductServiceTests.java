@@ -36,7 +36,7 @@ public class ProductServiceTests {
                 .price(1000)
                 .build();
 
-        productDTO.setUploadedFileNames(
+        productDTO.setUploadFileNames(
                 java.util.List.of(
                         UUID.randomUUID() + "_" + "Test1.jpg",
                         UUID.randomUUID() + "_" + "Test2.jpg"
