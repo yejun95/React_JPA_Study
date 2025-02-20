@@ -14,6 +14,7 @@ import org.zerock.apiserver.dto.PageResponseDTO;
 import org.zerock.apiserver.dto.ProductDTO;
 import org.zerock.apiserver.repository.ProductRepository;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -108,6 +109,34 @@ public class ProductServiceImpl implements ProductService {
         Product product = result.orElseThrow();
 
         return entityToDto(product);
+    }
+
+    @Override
+    public void modify(ProductDTO productDTO) {
+        //조회
+        Optional<Product> result = productRepository.findById(productDTO.getPno());
+
+        Product product = result.orElseThrow();
+
+        //변경 내용 반영
+        product.changePrice(productDTO.getPrice());
+        product.changeName(productDTO.getPname());
+        product.changeDesc(productDTO.getPdesc());
+        product.changeDel(productDTO.isDelFlag());
+
+        //이미지 처리
+        List<String> uploadFileNames = productDTO.getUploadedFileNames();
+
+        product.clearList();
+
+        if (uploadFileNames != null && !uploadFileNames.isEmpty()) {
+            uploadFileNames.forEach(uploadName -> {
+                product.addImageString(uploadName);
+            });
+        }
+
+        //저장
+        productRepository.save(product);
     }
 
     private ProductDTO entityToDto(Product product) {

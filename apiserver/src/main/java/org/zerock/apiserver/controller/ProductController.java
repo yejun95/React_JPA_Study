@@ -75,4 +75,18 @@ public class ProductController {
     public ProductDTO read(@PathVariable("pno") Long pno) {
         return productService.get(pno);
     }
+
+    //상품 변경
+    @PutMapping("/{pno}")
+    public Map<String, String> modify(@PathVariable("pno") Long pno, ProductDTO productDTO) {
+        productDTO.setPno(pno);
+
+        //원래 상품 가져오기 (db에 저장되어 있는)
+        ProductDTO oldProductDTO = productService.get(pno);
+
+        //파일 업로드
+        List<MultipartFile> files = productDTO.getFiles();
+        List<String> currentUploadFileNames = fileUtil.saveFiles(files);
+
+    }
 }
