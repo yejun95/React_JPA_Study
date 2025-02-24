@@ -138,6 +138,12 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
     }
 
+    //삭제
+    @Override
+    public void remove(Long pno) {
+        productRepository.deleteById(pno);
+    }
+
     private ProductDTO entityToDto(Product product) {
 
         ProductDTO productDTO = ProductDTO.builder()
