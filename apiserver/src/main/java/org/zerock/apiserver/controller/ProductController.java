@@ -67,6 +67,13 @@ public class ProductController {
 
         Long pno = productService.register(productDTO);
 
+        // 화면에서 Loading 모달을 보여주기 위한 강제 슬립
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         return Map.of("result", pno);
     }
 
