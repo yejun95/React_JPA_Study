@@ -45,7 +45,7 @@ function ListComponent(props) {
                     <div
                         key={product.pno}
                         className={'w-1/2 p-1 rounded shadow-md border-2'}
-                        onClick={() => moveToRead(product)}
+                        onClick={() => moveToRead(product.pno)}
                     >
 
                         <div className={'flex flex-col h-full'}>
