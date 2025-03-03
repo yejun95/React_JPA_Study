@@ -9,3 +9,10 @@ export const postAdd = async (product) => {
 
     return res.data;
 }
+
+export const getList = async (pageParam) => {
+    const {page, size} = pageParam;
+    const res = await axios.get(`${host}/list`, {params: {page: page, size: size}})
+
+    return res.data;
+}
