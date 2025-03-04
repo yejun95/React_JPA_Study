@@ -17,7 +17,7 @@ const host = API_SERVER_HOST;
 function ReadComponent({pno}) {
     const [product, setProduct] = useState(initState);
     const [fetching, setFetching] = useState(false);
-    const {moveToList, moveToModify} = useCustomMove();
+    const {moveToList, moveToModify, page, size} = useCustomMove();
 
     useEffect(() => {
         setFetching(true);
@@ -88,7 +88,7 @@ function ReadComponent({pno}) {
                 </button>
                 <button type={'button'}
                         className={'rounded p-4 m-2 text-xl w-32 text-white bg-blue-500'}
-                        onClick={moveToList}
+                        onClick={() => moveToList({page, size})}
                 >
                     List
                 </button>
