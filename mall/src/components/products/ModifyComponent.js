@@ -20,7 +20,7 @@ function ModifyComponent({pno}) {
     const [product, setProduct] = useState(initState);
     const [fetching, setFetching] = useState(false);
     const [result, setResult] = useState(false);
-    const {moveToList, moveToRead} = useCustomMove();
+    const {moveToList, moveToRead, page, size} = useCustomMove();
 
     const uploadRef = useRef();
 
@@ -202,6 +202,7 @@ function ModifyComponent({pno}) {
                 </button>
                 <button type={'button'}
                         className={'rounded p-4 m-2 text-xl w-32 text-white bg-blue-500'}
+                        onClick={() => moveToList({page, size})}
                 >
                     List
                 </button>
