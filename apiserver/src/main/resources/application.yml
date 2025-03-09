@@ -17,6 +17,10 @@ spring:
 logging:
   level:
     sql: info
+    org:
+      springframework:
+        security:
+          web: trace
 
 # 파일 업로드 경로 생성
 org:
