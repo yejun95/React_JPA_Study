@@ -33,6 +33,11 @@ public class CustomSecurityConfig {
         //CSRF 미설정 - 위조 방지
         http.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
 
+        //로그인 페이지 설정
+        http.formLogin(config -> {
+            config.loginPage("/api/member/login");
+        });
+
         return http.build();
     }
 
