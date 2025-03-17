@@ -9,9 +9,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.zerock.apiserver.security.filter.JWTCheckFilter;
 import org.zerock.apiserver.security.handler.APILoginFailHandler;
 import org.zerock.apiserver.security.handler.APILoginSuccessHandler;
 
@@ -50,6 +52,9 @@ public class CustomSecurityConfig {
             //로그인에 실패한다면
             config.failureHandler(new APILoginFailHandler());
         });
+
+        //filter 추가 > UsernamePasswordAuthenticationFilter 클래스가 동작하기전에 JWTCheckFilter를 실행
+        http.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
