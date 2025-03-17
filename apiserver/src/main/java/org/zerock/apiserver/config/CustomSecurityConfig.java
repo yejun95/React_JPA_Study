@@ -12,6 +12,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.zerock.apiserver.security.handler.APILoginFailHandler;
+import org.zerock.apiserver.security.handler.APILoginSuccessHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,6 +43,12 @@ public class CustomSecurityConfig {
         //로그인 페이지 설정
         http.formLogin(config -> {
             config.loginPage("/api/member/login");
+
+            //로그인에 성공하면 무엇을 실행할것인가? -> 직접 만든 클래스 사용
+            config.successHandler(new APILoginSuccessHandler());
+
+            //로그인에 실패한다면
+            config.failureHandler(new APILoginFailHandler());
         });
 
         return http.build();
