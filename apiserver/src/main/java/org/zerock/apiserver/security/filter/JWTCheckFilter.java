@@ -11,11 +11,17 @@ import org.zerock.apiserver.util.JWTUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @Log4j2
 //모든 Request에 대해 검사하는 Filter > OncePerRequestFilter
 public class JWTCheckFilter extends OncePerRequestFilter {
+
+    //제외할 url
+    private static final List<String> EXCLUDE_URL = List.of("/api/member/login");
 
     //예외 경로 설정 가능
     @Override
@@ -26,7 +32,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 
         //true == not checking
         //return false == check
-        return false;
+        return EXCLUDE_URL.stream().anyMatch(exclude -> exclude.equalsIgnoreCase(request.getServletPath()));
     }
 
     @Override
