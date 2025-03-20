@@ -17,6 +17,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.zerock.apiserver.security.filter.JWTCheckFilter;
 import org.zerock.apiserver.security.handler.APILoginFailHandler;
 import org.zerock.apiserver.security.handler.APILoginSuccessHandler;
+import org.zerock.apiserver.security.handler.CustomAccessDeniedHandler;
 
 import java.util.Arrays;
 
@@ -56,6 +57,11 @@ public class CustomSecurityConfig {
 
         //filter 추가 > UsernamePasswordAuthenticationFilter 클래스가 동작하기전에 JWTCheckFilter를 실행
         http.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
+
+        // PreAuthorize에 의해 권한이 없을 경우
+        http.exceptionHandling(config -> {
+            config.accessDeniedHandler(new CustomAccessDeniedHandler());
+        });
 
         return http.build();
     }
