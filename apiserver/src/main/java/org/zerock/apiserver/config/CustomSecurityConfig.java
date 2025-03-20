@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,12 +18,12 @@ import org.zerock.apiserver.security.filter.JWTCheckFilter;
 import org.zerock.apiserver.security.handler.APILoginFailHandler;
 import org.zerock.apiserver.security.handler.APILoginSuccessHandler;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 @Configuration
 @Log4j2
 @RequiredArgsConstructor
+@EnableMethodSecurity //controller에서 @PreAuthorize annotaion을 통해 메서드가 실행되기 전 인증을 거친다.
 public class CustomSecurityConfig {
 
     @Bean
