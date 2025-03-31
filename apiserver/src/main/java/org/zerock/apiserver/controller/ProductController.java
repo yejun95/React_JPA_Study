@@ -50,7 +50,7 @@ public class ProductController {
 
     // 목록 데이터 조회
     //PreAuthorize 메서드가 실행되기 전에 인증을 거친다.
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/list")
     public PageResponseDTO<ProductDTO> list(PageRequestDTO pageRequestDTO) {
         return productService.getList(pageRequestDTO);
