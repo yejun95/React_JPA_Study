@@ -23,19 +23,30 @@ import java.util.Map;
 //모든 Request에 대해 검사하는 Filter > OncePerRequestFilter
 public class JWTCheckFilter extends OncePerRequestFilter {
 
-    //제외할 url
-    private static final List<String> EXCLUDE_URL = List.of("/api/member/login");
-
     //예외 경로 설정 가능
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 
-        String path = request.getRequestURI();
-        log.info("check url-------------{}", path);
+        // Preflight요청은 체크하지 않음
+        if(request.getMethod().equals("OPTIONS")){
+            return true;
+        }
 
-        //true == not checking
-        //return false == check
-        return EXCLUDE_URL.stream().anyMatch(exclude -> exclude.equalsIgnoreCase(request.getServletPath()));
+        String path = request.getRequestURI();
+
+        log.info("check uri.............." + path);
+
+        //api/member/ 경로의 호출은 체크하지 않음
+        if(path.startsWith("/api/member/")) {
+            return true;
+        }
+
+        //이미지 조회 경로는 체크하지 않는다면
+        if(path.startsWith("/api/products/view/")) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override

@@ -2,6 +2,7 @@ package org.zerock.apiserver.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +33,6 @@ public class APIRefreshController {
 
         // AccessToken의 만료여부 확인
         if (checkExpiredToken(accessToken) == false) { // 만료가 되지 않음
-            log.info("-----------original accessToken-----------");
             return Map.of("accessToken", accessToken, "refreshToken", refreshToken); // 원래 있던 token 반환
         }
 
