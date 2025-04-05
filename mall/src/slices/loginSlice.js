@@ -8,8 +8,10 @@ const loginSlice = createSlice({
     name: 'loginSlice',
     initialState: initState,
     reducers: {
-        login: () => {
-            console.log("login..........");
+        login: (state, action) => {
+            return {
+                email: action.payload.email
+            }
         },
         logout: () => {
             console.log("logout..........");

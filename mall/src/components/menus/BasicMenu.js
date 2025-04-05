@@ -1,7 +1,11 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 function BasicMenu(props) {
+
+    const loginState = useSelector(state => state.loginSlice);
+
     return (
         <nav id="navbar" className="flex bg-blue-300">
 
@@ -13,18 +17,26 @@ function BasicMenu(props) {
                     <li className={"pr-6 text-2xl"}>
                         <Link to={"/about"}>About</Link>
                     </li>
-                    <li className={"pr-6 text-2xl"}>
-                        <Link to={"/todo/"}>Todo</Link>
-                    </li>
-                    <li className={"pr-6 text-2xl"}>
-                        <Link to={"/products/"}>Products</Link>
-                    </li>
+
+                    {/*로그인한 사용자*/}
+                    {loginState.email ?
+                        <>
+                        <li className={"pr-6 text-2xl"}>
+                            <Link to={"/todo/"}>Todo</Link>
+                        </li>
+                        <li className={"pr-6 text-2xl"}>
+                            <Link to={"/products/"}>Products</Link>
+                        </li>
+                        </>
+                    :
+                        <></>
+                    }
                 </ul>
             </div>
 
             <div className={"w-1/5 flex justify-end bg-orange-300 p-4 font-medium"}>
                 <div className={"text-white text-sm m-1 rounded"}>
-                    Login
+                    <Link to={'/member/login'}>Login</Link>
                 </div>
             </div>
         </nav>
