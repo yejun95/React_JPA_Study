@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useDispatch} from "react-redux";
-import {login} from "../../slices/loginSlice";
+import {login, loginPostAsync} from "../../slices/loginSlice";
 
 const initState = {
     email: '',
@@ -21,7 +21,10 @@ function LoginComponent(props) {
 
 const handleClickLogin = (e) => {
 
-    dispatch(login(loginParam));
+    // dispatch(login(loginParam));
+
+    // createAsyncThunk를 바로 호출
+    dispatch(loginPostAsync(loginParam));
 }
 
     return (
