@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {useDispatch} from "react-redux";
-import {login, loginPostAsync} from "../../slices/loginSlice";
+import useCustomLogin from "../../hooks/useCustomLogin";
 
 const initState = {
     email: '',
@@ -11,7 +10,7 @@ function LoginComponent(props) {
 
     const [loginParam, setLoginParam] = useState({...initState});
 
-    const dispatch = useDispatch();
+    const {doLogin, moveToPath} = useCustomLogin();
 
     const handleChange = (e) => {
         loginParam[e.target.name] = e.target.value
@@ -23,8 +22,15 @@ const handleClickLogin = (e) => {
 
     // dispatch(login(loginParam));
 
-    // createAsyncThunk를 바로 호출
-    dispatch(loginPostAsync(loginParam));
+    // customHook에서 createAsyncThunk를 바로 호출
+    doLogin(loginParam).then(data => {
+        if (data.error) {
+            alert("아이디와 비번을 확인하세요");
+        } else {
+            alert("로그인 성공");
+            moveToPath('/');
+        }
+    })
 }
 
     return (
