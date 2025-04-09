@@ -4,7 +4,6 @@ import {Cookies} from "react-cookie";
 const cookies = new Cookies();
 
 export const setCookie = (name, value, days = 1) => {
-    console.log("days", days);
     const expires = new Date();
     expires.setUTCDate(expires.getUTCDate() + days); // 쿠키 보관 기간
 
