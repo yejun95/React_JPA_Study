@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import useCustomLogin from "../../hooks/useCustomLogin";
+import KakaoLoginComponent from "./KakaoLoginComponent";
 
 const initState = {
     email: '',
@@ -64,7 +65,7 @@ const handleClickLogin = (e) => {
                 </div>
             </div>
             <div className={'flex justify-center'}>
-                <div className={'relative mb-4 flex w-full items-stretch'}>
+                <div className={'relative mb-4 flex justify-center w-full items-stretch'}>
                     <div className={'w-2/5 p-6 flex justify-center font-bold'}>
                         <button className={'rounded p-4 w-36 bg-blue-500 text-xl text-white'}
                                 onClick={handleClickLogin}
@@ -74,7 +75,7 @@ const handleClickLogin = (e) => {
                     </div>
                 </div>
             </div>
-
+            <KakaoLoginComponent/>
         </div> //end container
     );
 }
