@@ -1,5 +1,7 @@
 import axios from "axios";
+import {API_SERVER_HOST} from "./todoApi";
 
+const host = API_SERVER_HOST;
 const rest_api_key = '13df2264aba336ef247b64427760f14b';
 const redirect_uri = 'http://localhost:3000/member/kakao';
 const auth_code_path = 'https://kauth.kakao.com/oauth/authorize'; // 인가 코드 발급 url
@@ -28,4 +30,11 @@ export const getAccessToken = async (authCode) => {
     const accessToken = res.data.access_token;
 
     return accessToken;
+}
+
+export const getMemberWithAccessToken = async (accessToken)  => {
+
+    const res = await axios.get(`${host}/api/member/kakao?accessToken=${accessToken}`);
+
+    return res.data;
 }
