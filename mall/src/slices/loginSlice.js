@@ -19,9 +19,9 @@ const loginSlice = createSlice({
     initialState: loadMemberCookie() || initState, // cookie 값을 먼저 쓰고 없다면 initState 사용
     reducers: {
         login: (state, action) => {
-            return {
-                //email: action.payload.email
-            }
+            setCookie('member', JSON.stringify(action.payload), 1);
+
+            return action.payload;
         },
         logout: () => {
             removeCookie('member');
