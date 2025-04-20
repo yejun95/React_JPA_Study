@@ -14,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.zerock.apiserver.domain.Member;
 import org.zerock.apiserver.domain.MemberRole;
 import org.zerock.apiserver.dto.MemberDTO;
+import org.zerock.apiserver.dto.MemberModifyDTO;
 import org.zerock.apiserver.repository.MemberRepository;
 
 import java.util.LinkedHashMap;
@@ -50,6 +51,21 @@ public class MemberServiceImpl implements MemberService {
         MemberDTO memberDTO = entityToDTO(socialMember);
 
         return memberDTO;
+    }
+
+    @Override
+    public void modifyMember(MemberModifyDTO memberModifyDTO) {
+
+        Optional<Member> result = memberRepository.findById(memberModifyDTO.getEmail());
+
+        Member member = result.orElseThrow();
+
+        // 수정을 한다는 것은 소셜 회원이 아니게 된다는 뜻
+        member.changeNickname(memberModifyDTO.getNickname());
+        member.changeSocial(false);
+        member.changePw(passwordEncoder.encode(memberModifyDTO.getPw()));
+
+        memberRepository.save(member);
     }
 
     private Member makeSocialMember(String email) {

@@ -2,9 +2,9 @@ package org.zerock.apiserver.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.zerock.apiserver.dto.MemberDTO;
+import org.zerock.apiserver.dto.MemberModifyDTO;
 import org.zerock.apiserver.service.MemberService;
 import org.zerock.apiserver.util.JWTUtil;
 
@@ -34,6 +34,14 @@ public class SocialController {
 
         // Spring MVC 이므로 Handler와 다르게 Gson을 쓰지 않아도 자동 변환이 된다.
         return claims;
+    }
+
+    @PutMapping("/api/member/modify")
+    public Map<String, String> modify(@RequestBody MemberModifyDTO memberModifyDTO) {
+
+        memberService.modifyMember(memberModifyDTO);
+
+        return Map.of("result", "modified");
     }
 
 }
