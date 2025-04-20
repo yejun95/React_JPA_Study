@@ -1,5 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector} from "react-redux";
+import {modifyMember} from "../../api/memberApi";
+import useCustomLogin from "../../hooks/useCustomLogin";
+import ResultModal from "../common/ResultModal";
+import {logout} from "../../slices/loginSlice";
 
 const initState = {
     email: '',
@@ -13,6 +17,10 @@ function ModifyComponent(props) {
 
     const loginInfo = useSelector(state => state.loginSlice);
 
+    const {moveToLogin} = useCustomLogin();
+
+    const [result, setResult] = useState();
+
     useEffect(() => {
 
         setMember({...loginInfo, pw: "ABCD"})
@@ -24,6 +32,24 @@ function ModifyComponent(props) {
         member[e.target.name] = e.target.value;
 
         setMember({...member});
+    }
+
+    const handleClickModify = () => {
+
+        modifyMember(member).then(result => {
+
+            setResult('Modified');
+        });
+    }
+
+    const closeModal = () => {
+
+        setResult(null);
+
+        // member 쿠키 삭제
+        logout();
+
+        moveToLogin();
     }
 
     return (
@@ -71,13 +97,18 @@ function ModifyComponent(props) {
                 <div className={'relative mb-4 flex w-full flex-wrap justify-end'}>
                     <button type='button'
                             className='rounded p-4 m-2 text-xl w-32 text-white bg-blue-500'
+                            onClick={handleClickModify}
                     >
                         Modify
                     </button>
                 </div>
             </div>
 
+            {/* Modal */}
+            {result ? <ResultModal callbackFn={closeModal} title={'회원정보수정'} content={'수정완료'} /> : ''}
+
         </div> // end container
+
     );
 }
 
