@@ -10,7 +10,9 @@ import org.zerock.apiserver.domain.Cart;
 import org.zerock.apiserver.domain.CartItem;
 import org.zerock.apiserver.domain.Member;
 import org.zerock.apiserver.domain.Product;
+import org.zerock.apiserver.dto.CartItemListDTO;
 
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
@@ -69,7 +71,11 @@ public class CartRepositoryTests {
 
         String email = "user1@aaa.com";
 
-        cartItemRepository.getItemsOfCartDTOByEmail(email);
+        List<CartItemListDTO> cartItemListDTOList = cartItemRepository.getItemsOfCartDTOByEmail(email);
+
+        for (CartItemListDTO dto : cartItemListDTOList) {
+            log.info(dto);
+        }
     }
 
     @Transactional
