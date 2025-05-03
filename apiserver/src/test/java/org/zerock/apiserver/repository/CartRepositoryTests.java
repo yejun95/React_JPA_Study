@@ -72,4 +72,21 @@ public class CartRepositoryTests {
         cartItemRepository.getItemsOfCartDTOByEmail(email);
     }
 
+    @Transactional
+    @Commit
+    @Test
+    public void testUpdateByCino() {
+
+        Long cino = 1L;
+        int qty = 4;
+
+        Optional<CartItem> result = cartItemRepository.findById(cino);
+
+        CartItem cartItem = result.orElseThrow();
+
+        cartItem.changeQty(qty);
+
+        cartItemRepository.save(cartItem);
+    }
+
 }
