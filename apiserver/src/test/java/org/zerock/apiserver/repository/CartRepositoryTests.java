@@ -31,8 +31,8 @@ public class CartRepositoryTests {
     public void testInsertByProduct() {
 
         String email = "user1@aaa.com";
-        Long pno = 4L;
-        int qty = 4;
+        Long pno = 6L;
+        int qty = 3;
 
         // 이메일과 상품번호로 장바구니 아이템 확인 -> 없으면 추가, 있으면 수량 변경해서 저장
         CartItem cartItem = cartItemRepository.getItemOfPno(email, pno);
@@ -95,4 +95,23 @@ public class CartRepositoryTests {
         cartItemRepository.save(cartItem);
     }
 
+    @Transactional
+    @Commit
+    @Test
+    public void testDeleteThenList() {
+
+        Long cino = 1L;
+
+        Long cno = cartItemRepository.getCartFromItem(cino);
+
+        cartItemRepository.deleteById(cino);
+
+        List<CartItemListDTO> cartItemList = cartItemRepository.getItemsOfCartDTOByCart(cno);
+
+        for (CartItemListDTO dto : cartItemList) {
+            log.info(dto);
+        }
+
+
+    }
 }
