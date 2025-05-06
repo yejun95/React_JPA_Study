@@ -44,5 +44,13 @@ public class CartController {
         return cartService.getCartItems(email);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @DeleteMapping("/{cino}")
+    public List<CartItemListDTO> removeFromCart(@PathVariable("cino") Long cino) {
+
+        log.info("cart item no: {}", cino);
+
+        return cartService.remove(cino);
+    }
 
 }
