@@ -3,14 +3,12 @@ package org.zerock.apiserver.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.zerock.apiserver.dto.CartItemDTO;
 import org.zerock.apiserver.dto.CartItemListDTO;
 import org.zerock.apiserver.service.CartService;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -33,6 +31,17 @@ public class CartController {
         }
 
         return cartService.addOrModify(itemDTO);
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/items")
+    public List<CartItemListDTO> getCartItems(Principal principal) { // principal : security에 들어있는 로그인 값 확인
+
+        String email = principal.getName();
+
+        log.info("email {}", email);
+
+        return cartService.getCartItems(email);
     }
 
 
