@@ -18,10 +18,8 @@ const cartSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(getCartItemsAsync.fulfilled, (state, action) => {
-            return {
-                items: action.payload,
-                status: 'fulfilled'
-            }
+            state.items = action.payload
+            state.status = 'fulfilled'
         }).addCase(getCartItemsAsync.pending, (state, action) => {
             state.status = 'pending'
         }).addCase(getCartItemsAsync.rejected, (state, action) => {
