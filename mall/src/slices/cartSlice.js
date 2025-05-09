@@ -1,8 +1,12 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {getCartItems} from "../api/cartApi";
+import {getCartItems, postChangeCart} from "../api/cartApi";
 
 export const getCartItemsAsync = createAsyncThunk('getCartItemsAsync', () => {
     return getCartItems()
+})
+
+export const postChangeCartAsync = createAsyncThunk('postChangeCartAsync', (param) => {
+    return postChangeCart(param)
 })
 
 const initState = {
@@ -23,6 +27,13 @@ const cartSlice = createSlice({
         }).addCase(getCartItemsAsync.pending, (state, action) => {
             state.status = 'pending'
         }).addCase(getCartItemsAsync.rejected, (state, action) => {
+            state.status = 'rejected'
+        }).addCase(postChangeCartAsync.fulfilled, (state, action) => {
+            state.items = action.payload
+            state.status = 'fulfilled'
+        }).addCase(postChangeCartAsync.pending, (state, action) => {
+            state.status = 'pending'
+        }).addCase(postChangeCartAsync.rejected, (state, action) => {
             state.status = 'rejected'
         })
     }

@@ -4,7 +4,7 @@ import CartItemComponent from "../cart/cartItemComponent";
 
 function CartComponent(props) {
 
-    const {loginState, isLogin, cartItems} = useCustomCart()
+    const {loginState, isLogin, cartItems, changeCart} = useCustomCart()
 
     return (
         <div className='w-full'>
@@ -18,7 +18,7 @@ function CartComponent(props) {
                                 {cartItems.items.length}
                             </div>
                             <ul>
-                                {cartItems.items.map(item => <CartItemComponent cartItem={item} key={item.cino}/>)}
+                                {cartItems.items.map(item => <CartItemComponent cartItem={item} changeCart={changeCart} key={item.cino}/>)}
                             </ul>
                         </>
                     }
