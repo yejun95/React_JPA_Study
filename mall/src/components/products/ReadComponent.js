@@ -3,6 +3,7 @@ import {API_SERVER_HOST} from "../../api/todoApi";
 import {getOne} from "../../api/productsApi";
 import FetchingModal from "../common/FetchingModal";
 import useCustomMove from "../../hooks/useCustomMove";
+import useCustomCart from "../../hooks/useCustomCart";
 
 const initState = {
     pno: 0,
@@ -18,6 +19,23 @@ function ReadComponent({pno}) {
     const [product, setProduct] = useState(initState);
     const [fetching, setFetching] = useState(false);
     const {moveToList, moveToModify, page, size} = useCustomMove();
+    const {changeCart, cartItems} = useCustomCart()
+
+    const handleClickAddCart = () => {
+        const addedItem = cartItems.items.filter(item => item.pno === product.pno)[0]
+
+        if (addedItem) {
+            if (!window.confirm("이미 추가된 상품입니다. 추가하시겠습니까?")) {
+                return;
+            }
+        }
+
+        if (addedItem) {
+            changeCart(addedItem.cino, product.pno, 1)
+        } else {
+            changeCart(null, product.pno, 1)
+        }
+    }
 
     useEffect(() => {
         setFetching(true);
@@ -25,7 +43,6 @@ function ReadComponent({pno}) {
         getOne(pno).then(data => {
             setFetching(false);
             setProduct(data);
-            console.log(data)
         })
     }, [pno]);
 
@@ -80,8 +97,14 @@ function ReadComponent({pno}) {
             </div>
 
             <div className={'flex justify-end p-4'}>
+                <button type="button"
+                        className="inline-block rounded p-4 m-2 text-xl w-32 text-white bg-green-500"
+                        onClick={() => handleClickAddCart()}
+                >
+                    Add Cart
+                </button>
                 <button type={'button'}
-                        className={'inline-block rounded p-4 m-2 text-xl w-32 text-white bg-red-500'}
+                        className={'inline-block rounded p-4 m-2 text-xl w-32 \text-white bg-red-500'}
                         onClick={() => moveToModify(pno)}
                 >
                     Modify
