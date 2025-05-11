@@ -3,7 +3,6 @@ package org.zerock.apiserver.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.zerock.apiserver.domain.Cart;
 import org.zerock.apiserver.domain.CartItem;
 import org.zerock.apiserver.dto.CartItemListDTO;
 
@@ -14,10 +13,10 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
     // 특정한 사용자의 모든 장바구니 아이템들을 가져올 경우 : input -> email, output -> CartItemListDTO
     // Long cino, int qty, String pname, int price, String imageFile
     // 한 번에 DTO 까지 뽑는 방식
-    @Query("SELECT new org.zerock.apiserver.dto.CartItemListDTO(ci.cino, ci.qty, p.pname, p.price, pi.fileName)" +
+    @Query("SELECT new org.zerock.apiserver.dto.CartItemListDTO(ci.cino, ci.qty, p.pno, p.pname, p.price, pi.fileName) " +
             "FROM CartItem ci " +
             "INNER JOIN Cart mc ON ci.cart = mc " +
-            "LEFT JOIN  Product p ON ci.product = p " +
+            "LEFT JOIN Product p ON ci.product = p " +
             "LEFT JOIN p.imageList pi " + // EmelementCollection이기 때문에 엔티티로 조인을 못함
             "WHERE pi.ord = 0 " +
             "AND mc.owner.email = :email " +
@@ -40,7 +39,7 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
     Long getCartFromItem(@Param("cino") Long cino);
 
     // 장바구니 번호로 모든 장바구니 아이템을 조회
-    @Query("SELECT new org.zerock.apiserver.dto.CartItemListDTO(ci.cino, ci.qty, p.pname, p.price, pi.fileName) " +
+    @Query("SELECT new org.zerock.apiserver.dto.CartItemListDTO(ci.cino, ci.qty, p.pno, p.pname, p.price, pi.fileName) " +
             "FROM CartItem ci " +
             "INNER JOIN Cart c ON ci.cart = c " +
             "LEFT JOIN Product p ON ci.product = p " +
