@@ -6,6 +6,8 @@
 
 ## ✔️ 추가 적용 필요 사항 - 2025.5.12 기준
 - AWS 배포 - 2025.5.12 진행
+  - Elastic Beanstalk 사용
+<br>
 
 - Docker 적용
   - AWS에서 Docker 미적용, 적용 둘 다 진행해보기
