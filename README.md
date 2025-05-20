@@ -13,4 +13,4 @@
   - AWS에서 Docker 미적용, 적용 둘 다 진행해보기
 <br>
 
-- Typescript 적용
+- Typescript 적용 - 2025.5.15 진행
