@@ -1,14 +1,16 @@
-import {NavLink} from "react-router";
+import { NavLink } from "react-router";
 
-function mainPage() {
+
+function MainPage() {
   return (
-    <div className='text-3xl'>
-      <div className='flex'>
-        <NavLink to={'/about'}>About</NavLink>
-      </div>
-      <div>Main Page</div>
+  <div className=" text-3xl">
+    <div className="flex">
+      <NavLink to='/about'>About</NavLink>      
     </div>
-  )
+
+   <div>Main Page</div>
+  </div>
+  );
 }
 
-export default mainPage
+export default MainPage;

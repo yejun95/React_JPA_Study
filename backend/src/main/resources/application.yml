@@ -1,13 +1,13 @@
 spring:
   datasource:
-    #driver-class-name: org.mariadb.jdbc.Driver
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    #url: jdbc:mariadb://localhost:3307/apidb
-    url: jdbc:mysql://awseb-e-gdbi2yxiqc-stack-awsebrdsdatabase-cm4jxrwwpo7q.cbusmwwqotu6.ap-northeast-2.rds.amazonaws.com:3306/malldb
-    #username: apidbuser
-    #password: apidbuser
-    username: malldbuser
-    password: malldbuser
+    driver-class-name: org.mariadb.jdbc.Driver
+    #driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mariadb://localhost:3307/apidb
+    #url: jdbc:mysql://awseb-e-gdbi2yxiqc-stack-awsebrdsdatabase-cm4jxrwwpo7q.cbusmwwqotu6.ap-northeast-2.rds.amazonaws.com:3306/malldb
+    username: apidbuser
+    password: apidbuser
+    #username: malldbuser
+    #password: malldbuser
   jpa:
     hibernate:
       ddl-auto: update
@@ -31,3 +31,6 @@ org:
   zerock:
     upload:
       path: upload
+
+#server:
+#  port: 5000

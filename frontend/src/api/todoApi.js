@@ -1,6 +1,6 @@
 import jwtAxios from "../util/jwtUtil";
 
-export const API_SERVER_HOST = 'http://localhost:8080';
+export const API_SERVER_HOST = 'http://APIServer1-env.eba-njf47mtc.ap-northeast-2.elasticbeanstalk.com';
 const prefix = `${API_SERVER_HOST}/api/todo`;
 
 export const getOne = async (tno) => {
