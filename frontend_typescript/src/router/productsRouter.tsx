@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react"
 import { Navigate } from "react-router"
-import { loadProducts } from "../pages/products/listPage"
-import { loadProduct } from "../pages/products/readPage"
+// import { loadProducts } from "../pages/products/listPage"
+// import { loadProduct } from "../pages/products/readPage"
 
 const ProductsIndex = lazy(() => import("../pages/products/indexPage"))
 const Loading = () => <div>Products Loading....</div>
@@ -21,7 +21,7 @@ export default function productsRouter() {
       {
         path: "list",
         element: <Suspense fallback={<Loading/>}><ProductsList/></Suspense>,
-        loader: loadProducts
+        //loader: loadProducts
       },
       {
         path: "",
@@ -34,12 +34,12 @@ export default function productsRouter() {
       {
         path: "read/:pno",
         element: <Suspense fallback={<Loading/>}><ProductsRead/></Suspense>,
-        loader:loadProduct
+        // loader:loadProduct
       },
       {
         path: "modify/:pno",
         element: <Suspense fallback={<Loading/>}><ProductsModify/></Suspense>,
-        loader:loadProduct
+        // loader:loadProduct
       },
 
    ] 
