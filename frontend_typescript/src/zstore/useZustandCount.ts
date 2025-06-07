@@ -13,7 +13,7 @@ const useZustandCount = create<CountStore>( (set, get) => {
   return {
     current: 13,
     amount: 1,
-    //inc : () => { (state) => { count: state.current++}},
+    //inc: () => set((state) => ({ current: state.current + 1 })),
     inc: () => { set ({ current: get().current + get().amount }) },
     dec: () => { set ({ current: get().current + get().amount })},
     changeAmount: (num: number) => {
